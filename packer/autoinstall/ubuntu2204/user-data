@@ -1,0 +1,56 @@
+#cloud-config
+autoinstall:
+  version: 1
+  apt:
+    disable_components: []
+    fallback: abort
+    geoip: false
+    preserve_sources_list: false
+    primary:
+      - arches: [default]
+        uri: http://archive.ubuntu.com/ubuntu/
+  codecs:
+    install: false
+  drivers:
+    install: false
+  identity:
+    hostname: linux
+    password: $2y$10$HXYSGGk15k3cSK2pUZ9gO.0k/yQLXPLeDDffQZHpND2bOMT2ovUKW
+    realname: tom
+    username: tom
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: fr
+    toggle: null
+    variant: ""
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      ens18:
+        dhcp4: true
+    version: 2
+  source:
+    id: ubuntu-server
+    search_drivers: false
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  packages:
+    - qemu-guest-agent
+    - vim
+    - rsyslog
+    - iproute2
+    - net-tools
+    - traceroute
+    - curl
+    - screen
+    - less
+    - iputils-ping
+  package_update: true
+  package_upgrade: true
+  updates: all
+  storage:
+    layout:
+    name: lvm
