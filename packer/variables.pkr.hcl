@@ -1,17 +1,18 @@
 variable "proxmox_token_id" {
-  type = string
+  type      = string
+  sensitive = true
 }
- 
+
 variable "proxmox_token_secret" {
   type      = string
   sensitive = true
 }
- 
+
 variable "ssh_username" {
-  type = string
+  type    = string
   default = "tom"
 }
- 
+
 variable "ssh_password" {
   type      = string
   sensitive = true
