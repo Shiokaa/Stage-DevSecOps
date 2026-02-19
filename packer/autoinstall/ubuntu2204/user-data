@@ -1,42 +1,28 @@
 #cloud-config
 autoinstall:
   version: 1
-  apt:
-    disable_components: []
-    fallback: abort
-    geoip: false
-    preserve_sources_list: false
-    primary:
-      - arches: [default]
-        uri: http://archive.ubuntu.com/ubuntu/
-  codecs:
-    install: false
-  drivers:
-    install: false
-  identity:
-    hostname: linux
-    password: $2y$10$HXYSGGk15k3cSK2pUZ9gO.0k/yQLXPLeDDffQZHpND2bOMT2ovUKW
-    realname: tom
-    username: tom
-  kernel:
-    package: linux-generic
+
+  locale: fr_FR.UTF-8
   keyboard:
     layout: fr
-    toggle: null
-    variant: ""
-  locale: en_US.UTF-8
+  timezone: Europe/Paris
+
   network:
+    version: 2
     ethernets:
       ens18:
         dhcp4: true
-    version: 2
-  source:
-    id: ubuntu-server
-    search_drivers: false
+
+  identity:
+    username: tom
+    hostname: linuxconfig
+    password: "$2y$10$nf3BM3HLoV0ytf8pnp5ecef9HebguNQzl90F1VUlnl8L.N.1chs8q"
+
   ssh:
+    install-server: true
     allow-pw: true
     authorized-keys: []
-    install-server: true
+
   packages:
     - qemu-guest-agent
     - vim
@@ -48,9 +34,92 @@ autoinstall:
     - screen
     - less
     - iputils-ping
-  package_update: true
-  package_upgrade: true
-  updates: all
+    - openssh-server
+
   storage:
-    layout:
-    name: lvm
+    config:
+      - id: disk-sda
+        type: disk
+        ptable: gpt
+        path: /dev/sda
+        wipe: superblock-recursive
+
+      # EFI System Partition
+      - id: efipart
+        type: partition
+        device: disk-sda
+        size: 512M
+        flag: boot
+        grub_device: true
+
+      - id: bootpart
+        type: partition
+        device: disk-sda
+        size: 1G
+
+      - id: pvpart
+        type: partition
+        device: disk-sda
+        size: -1
+
+      - id: vg0
+        type: lvm_volgroup
+        name: vg0
+        devices:
+          - pvpart
+
+      - id: root_lv
+        type: lvm_partition
+        name: root_lv
+        volgroup: vg0
+        size: 10G
+
+      - id: home_lv
+        type: lvm_partition
+        name: home_lv
+        volgroup: vg0
+        size: 5G
+
+      # Formats
+      - id: efipart_fs
+        type: format
+        volume: efipart
+        fstype: fat32
+
+      - id: bootpart_fs
+        type: format
+        volume: bootpart
+        fstype: ext4
+
+      - id: root_lv_fs
+        type: format
+        volume: root_lv
+        fstype: ext4
+
+      - id: home_lv_fs
+        type: format
+        volume: home_lv
+        fstype: ext4
+
+      # Mounts
+      - id: efipart-mount
+        type: mount
+        device: efipart_fs
+        path: /boot/efi
+
+      - id: bootpart-mount
+        type: mount
+        device: bootpart_fs
+        path: /boot
+
+      - id: root_lv_mount
+        type: mount
+        device: root_lv_fs
+        path: /
+
+      - id: home_lv_mount
+        type: mount
+        device: home_lv_fs
+        path: /home
+
+  shutdown: reboot
