@@ -3,7 +3,7 @@ packer {
   required_plugins {
     proxmox = {
       version = ">= v1.1.8"
-      source = "github.com/hashicorp/proxmox"
+      source  = "github.com/hashicorp/proxmox"
     }
   }
 }
