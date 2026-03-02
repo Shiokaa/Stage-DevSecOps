@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_file" "cloud_user_config" {
       {
         hostname       = var.vm_hostname
         domain         = var.domain
-        ssh_public_key = file(pathexpand(var.ssh_public_key))
+        ssh_public_key = trimspace(file(pathexpand(var.ssh_public_key)))
       }
     )
 
