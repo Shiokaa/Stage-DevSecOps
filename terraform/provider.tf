@@ -5,6 +5,6 @@ provider "proxmox" {
   insecure = true # car un certificat TLS auto-signé est utilisé
   ssh {
     agent    = true
-    username = "root"
+    username = "tom-ssh"
   }
 }

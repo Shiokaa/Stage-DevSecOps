@@ -7,11 +7,13 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
   node = "node1"
 
   vm_name              = "tpl-ubuntu-2204"
+  tags                 = "template;ubuntu-2204"
   template_description = "Ubuntu 22.04 Cloud Init template"
   os                   = "l26"
   sockets              = 1
   cores                = 2
   memory               = 2048
+  pool                 = "tom-pool"
 
   bios                    = "ovmf"
   qemu_agent              = true

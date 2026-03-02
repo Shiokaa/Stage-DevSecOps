@@ -122,4 +122,9 @@ autoinstall:
         device: home_lv_fs
         path: /home
 
+  late-commands:
+    - "echo 'Defaults:tom !requiretty' > /target/etc/sudoers.d/tom"
+    - "echo 'tom ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/tom"
+    - "chmod 440 /target/etc/sudoers.d/tom"
+
   shutdown: reboot
