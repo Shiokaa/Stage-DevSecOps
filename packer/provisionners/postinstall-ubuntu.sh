@@ -1,66 +1,38 @@
 #!/bin/bash
- 
-sudo service rsyslog stop
- 
-if [ -f /var/log/wtmp ]; then
-    sudo truncate -s0 /var/log/wtmp
-fi
-if [ -f /var/log/lastlog ]; then
-    sudo truncate -s0 /var/log/lastlog
-fi
- 
-sudo rm -rf /tmp/*
-sudo rm -rf /var/tmp/*
- 
+set -e
+
+echo "=== Début du nettoyage pour la création du template ==="
+
+# 1. Nettoyer l'état de cloud-init (TRÈS IMPORTANT)
+# Cela force cloud-init à se relancer intégralement au prochain boot
+sudo cloud-init clean --logs --seed
+
+# 2. Vider le machine-id (TRÈS IMPORTANT)
+# Si toutes les VM ont le même machine-id, elles obtiendront la même IP du serveur DHCP
+# et cloud-init pensera que c'est la même machine.
 sudo truncate -s 0 /etc/machine-id
-if [ -f /var/lib/dbus/machine-id ]; then
-    sudo rm /var/lib/dbus/machine-id
-fi
- 
-sudo cat /dev/null > ~/.bash_history && history -c
-history -w
- 
-sudo journalctl --rotate
-sudo journalctl --vacuum-time=1s
- 
-# Remove autoinstall and ds=nocloud from all grub config locations
-sudo sed -i 's| ds=nocloud[^ "]*||g' /etc/default/grub
-sudo sed -i 's/ autoinstall//g' /etc/default/grub
+sudo rm -f /var/lib/dbus/machine-id
+sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
 
-# Also clean grub.d overrides written by subiquity
-if [ -d /etc/default/grub.d ]; then
-    sudo sed -i 's| ds=nocloud[^ "]*||g' /etc/default/grub.d/*.cfg 2>/dev/null || true
-    sudo sed -i 's/ autoinstall//g' /etc/default/grub.d/*.cfg 2>/dev/null || true
-fi
-
-sudo update-grub
+# 3. Supprimer les configurations réseau figées par l'installeur de l'ISO
+# Si vous ne supprimez pas ça, Terraform n'arrivera pas à appliquer sa propre config IP
 sudo rm -f /etc/netplan/00-installer-config.yaml
+sudo rm -f /etc/netplan/50-cloud-init.yaml
 
-# 1) First, run cloud-init clean BEFORE removing configs
-#    (cloud-init clean can trigger dpkg hooks that recreate 90_dpkg.cfg)
-sudo cloud-init clean --logs
+# 4. Supprimer les clés SSH hôtes pour obliger leur recréation au premier boot
+# (pour ne pas avoir de conflit de clés SSH entre vos différentes VM)
+sudo rm -f /etc/ssh/ssh_host_*
 
-# 2) NOW remove all installer/subiquity cloud-init configs that disable cloud-init
-sudo rm -f /etc/cloud/cloud.cfg.d/subiquity-disable-cloudinit-networking.cfg
-sudo rm -f /etc/cloud/cloud.cfg.d/99-installer.cfg
-sudo rm -f /etc/cloud/cloud.cfg.d/90_dpkg.cfg
-sudo rm -f /etc/cloud/cloud.cfg.d/curtin-preserve-sources.cfg
+# 5. Nettoyage des logs et du cache apt pour gagner de la place
+sudo apt-get autoremove -y
+sudo apt-get clean
+sudo rm -rf /var/lib/apt/lists/*
+sudo rm -rf /var/log/installer
+sudo rm -rf /var/crash/*
 
-# Also remove the cloud-init.disabled marker if present
-sudo rm -f /etc/cloud/cloud-init.disabled
+# 6. Vider l'historique bash
+cat /dev/null > ~/.bash_history
+history -c
 
-# 3) Write a clean datasource config LAST (so nothing overwrites it)
-echo "datasource_list: [ConfigDrive, NoCloud]" | sudo tee /etc/cloud/cloud.cfg.d/99-pve.cfg
-
-# 4) Force ds-identify to always enable cloud-init
-#    Without this, cloud-init-generator runs ds-identify which doesn't detect
-#    the Proxmox cloud-init CD-ROM early enough and disables cloud-init.
-echo "policy: enabled" | sudo tee /etc/cloud/ds-identify.cfg
-
-# 5) Truncate machine-id to empty (cloud-init needs empty, not "uninitialized")
-sudo truncate -s 0 /etc/machine-id
-
-# 5) Verify 90_dpkg.cfg is really gone (debug output during packer build)
-echo "--- cloud.cfg.d contents after cleanup ---"
-ls -la /etc/cloud/cloud.cfg.d/
-cat /etc/cloud/cloud.cfg.d/99-pve.cfg
+echo "=== Nettoyage terminé ==="
+# Surtout ne pas faire de "reboot" ici. Laissez Packer éteindre la VM proprement.

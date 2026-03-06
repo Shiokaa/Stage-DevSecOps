@@ -9,7 +9,7 @@ resource "proxmox_virtual_environment_file" "cloud_user_config" {
   node_name    = var.target_node
 
   source_raw {
-    data = templatefile("cloud-init/user_data",
+    data = templatefile("cloud-init/user-data.yml",
       {
         hostname       = var.vm_hostname
         domain         = var.domain
@@ -27,7 +27,7 @@ resource "proxmox_virtual_environment_file" "cloud_meta_config" {
   node_name    = var.target_node
 
   source_raw {
-    data = templatefile("cloud-init/meta_data",
+    data = templatefile("cloud-init/meta-data.yml",
       {
         instance_id    = sha1(var.vm_hostname)
         local_hostname = var.vm_hostname
