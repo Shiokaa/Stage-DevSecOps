@@ -12,15 +12,17 @@ autoinstall:
     ethernets:
       ens18:
         dhcp4: true
+        dhcp6: false
 
   identity:
-    username: tom
-    hostname: linuxconfig
+    username: ubuntu-server
+    hostname: ubuntu
     password: "$2y$10$nf3BM3HLoV0ytf8pnp5ecef9HebguNQzl90F1VUlnl8L.N.1chs8q"
 
   ssh:
     install-server: true
     allow-pw: true
+    ssh_quiet_keygen: true
     authorized-keys: []
 
   packages:

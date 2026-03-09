@@ -34,6 +34,20 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
     discard      = true
   }
 
+
+  additional_iso_files {
+    type              = "ide"
+    index             = 1
+    iso_storage_pool  = "local"
+    unmount           = true
+    keep_cdrom_device = false
+    cd_files = [
+      "./autoinstall/ubuntu2204/meta-data",
+      "./autoinstall/ubuntu2204/user-data"
+    ]
+    cd_label = "cidata"
+  }
+
   efi_config {
     efi_storage_pool  = "local-lvm"
     pre_enrolled_keys = true
