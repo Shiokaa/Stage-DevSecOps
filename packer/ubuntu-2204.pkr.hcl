@@ -4,7 +4,7 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
   username                 = var.proxmox_token_id
   token                    = var.proxmox_token_secret
 
-  node = "node1"
+  node = "Node2"
 
   vm_name              = "tpl-ubuntu-2204"
   tags                 = "template;ubuntu-2204"
@@ -51,7 +51,7 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
   boot_iso {
     type             = "scsi"
     unmount          = true
-    iso_file         = "Backup-Node1:iso/ubuntu-24.04.3-live-server-amd64.iso"
+    iso_file         = "Backup-Node2:iso/ubuntu-24.04.3-live-server-amd64.iso"
     iso_storage_pool = "local"
     iso_checksum     = "sha256:c3514bf0056180d09376462a7a1b4f213c1d6e8ea67fae5c25099c6fd3d8274b"
   }
