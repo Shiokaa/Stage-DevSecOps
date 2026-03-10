@@ -12,7 +12,7 @@ variable "proxmox_endpoint" {
 variable "target_node" {
   description = "Proxmox node"
   type        = string
-  default     = "node2"
+  default     = "node1"
 }
 
 variable "vm_hostname" {

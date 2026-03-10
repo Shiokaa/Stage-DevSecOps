@@ -12,7 +12,6 @@ autoinstall:
     ethernets:
       ens18:
         dhcp4: true
-        dhcp6: false
 
   identity:
     username: ubuntu-server
@@ -22,7 +21,6 @@ autoinstall:
   ssh:
     install-server: true
     allow-pw: true
-    ssh_quiet_keygen: true
     authorized-keys: []
 
   packages:

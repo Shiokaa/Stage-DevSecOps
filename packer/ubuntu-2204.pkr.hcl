@@ -34,20 +34,6 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
     discard      = true
   }
 
-
-  additional_iso_files {
-    type              = "ide"
-    index             = 1
-    iso_storage_pool  = "local"
-    unmount           = true
-    keep_cdrom_device = false
-    cd_files = [
-      "./autoinstall/ubuntu2204/meta-data",
-      "./autoinstall/ubuntu2204/user-data"
-    ]
-    cd_label = "cidata"
-  }
-
   efi_config {
     efi_storage_pool  = "local-lvm"
     pre_enrolled_keys = true
@@ -67,7 +53,20 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
     unmount          = true
     iso_file         = "Backup-Node1:iso/ubuntu-24.04.3-live-server-amd64.iso"
     iso_storage_pool = "local"
-    iso_checksum     = "sha256:c3514bf0056180d09376462a7a1b4f213c1d6e8ea67fae5c25099c6fd3d8274b"
+    iso_checksum     = "none"
+  }
+
+  additional_iso_files {
+    type              = "ide"
+    index             = 1
+    iso_storage_pool  = "local"
+    unmount           = true
+    keep_cdrom_device = false
+    cd_files = [
+      "./autoinstall/ubuntu2204/meta-data",
+      "./autoinstall/ubuntu2204/user-data"
+    ]
+    cd_label = "cidata"
   }
 
   boot_wait = "15s"

@@ -10,7 +10,7 @@ variable "proxmox_token_secret" {
 
 variable "ssh_username" {
   type    = string
-  default = "tom"
+  default = "ubuntu-server"
 }
 
 variable "ssh_password" {
