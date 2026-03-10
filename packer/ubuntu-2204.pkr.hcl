@@ -69,6 +69,8 @@ source "proxmox-iso" "tpl-ubuntu-2204" {
     cd_label = "cidata"
   }
 
+  boot = "order=scsi0;net0;ide0"
+
   boot_wait = "15s"
   boot_command = [
     "<spacebar><wait><spacebar><wait><spacebar><wait><spacebar><wait><spacebar><wait>",

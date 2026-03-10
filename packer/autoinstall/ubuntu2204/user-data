@@ -123,8 +123,8 @@ autoinstall:
         path: /home
 
   late-commands:
-    - "echo 'Defaults:tom !requiretty' > /target/etc/sudoers.d/tom"
-    - "echo 'tom ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/tom"
-    - "chmod 440 /target/etc/sudoers.d/tom"
+    - "echo 'Defaults:ubuntu-server !requiretty' > /target/etc/sudoers.d/ubuntu-server"
+    - "echo 'ubuntu-server ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/ubuntu-server"
+    - "chmod 440 /target/etc/sudoers.d/ubuntu-server"
 
   shutdown: reboot
