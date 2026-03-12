@@ -1,0 +1,10 @@
+# ──────────────────────────────────────────────
+# Example: copiez ça dans : terraform.tfvars et remplacer par vos valeurs
+# ──────────────────────────────────────────────
+
+proxmox_api_url          = "https://proxmox.example.com:8006/api2/json"
+proxmox_api_token_id     = "terraform@pam!terraform-token"
+proxmox_api_token_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+proxmox_skip_tls_verify  = true
+
+ssh_public_key = "ssh-ed25519 AAAA... "

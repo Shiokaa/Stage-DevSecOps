@@ -114,3 +114,13 @@ Stage-DevSecOps/
 - [ ] Gérer les secrets avec **HashiCorp Vault** ou des variables d'environnement
 - [ ] Implémenter les disques supplémentaires dynamiques dans Terraform
 - [ ] Documenter la procédure de build Packer et de déploiement Terraform
+
+
+# Lancement : 
+
+## Packer : 
+
+```bash
+packer init .
+packer build -var-file=variables.pkrvars.hcl .
+```

@@ -1,0 +1,25 @@
+# ──────────────────────────────────────────────
+# Example: copiez ça dans : variables.pkrvars.hcl et remplacer par vos valeurs
+# ──────────────────────────────────────────────
+
+proxmox_api_url          = "https://proxmox.example.com:8006/api2/json"
+proxmox_api_token_id     = "terraform@pam!terraform-token"
+proxmox_api_token_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+proxmox_node             = "node2"
+
+# Mettre en false si vous avez la certification TLS
+proxmox_skip_tls_verify = true
+
+# Mettre le chemin vers l'installateur de votre ISO
+iso_file     = "local:iso/ubuntu-24.04.2-live-server-amd64.iso"
+iso_checksum = "none"
+
+# Hardware pour la template
+vm_id        = 9000
+vm_cores     = 2
+vm_memory    = 2048
+vm_disk_size = "20G"
+
+# SSH
+ssh_username = "packer"
+ssh_password = "packer"

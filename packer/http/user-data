@@ -1,0 +1,41 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: fr_FR.UTF-8
+  keyboard:
+    layout: fr
+  identity:
+    hostname: ubuntu-template
+    username: ubuntu
+    password: "$2y$10$7t1xkNZXd1BizRl4Ukzo8e0gSW/mw5SHWta8GXuDKrHgJ0EACM02K"
+  ssh:
+    install-server: true
+    allow-pw: true
+  storage:
+    layout:
+      name: lvm
+  packages:
+    - qemu-guest-agent
+    - cloud-init
+    - sudo
+    - vim
+    - rsyslog
+    - iproute2
+    - net-tools
+    - traceroute
+    - curl
+    - screen
+    - less
+    - iputils-ping
+    - openssh-server
+  late-commands:
+    # Active le qemu agent pour que proxmox puisse communiquer avec.
+    - "curtin in-target -- systemctl enable qemu-guest-agent"
+    - "echo 'Defaults:ubuntu !requiretty' > /target/etc/sudoers.d/ubuntu"
+    - "echo 'ubuntu ALL=(ALL) NOPASSWD: ALL' >> /target/etc/sudoers.d/ubuntu"
+    - "chmod 440 /target/etc/sudoers.d/ubuntu"
+  user-data:
+    disable_root: true
+    timezone: Europe/Paris
+
+  shutdown: reboot
