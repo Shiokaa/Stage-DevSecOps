@@ -76,8 +76,11 @@ cd ./Stage-DevSecOps
 ```
 
 ## Le build.sh :
+Génère le template Packer, provisionne avec Terraform puis configure avec Ansible
+
 Allez à la racine du projet et : 
 ```bash
+chmod +x build.sh
 ./build.sh
 ```
 
