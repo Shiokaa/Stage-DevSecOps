@@ -30,6 +30,13 @@ resource "proxmox_vm_qemu" "vm" {
 
   # Disk — Redimensionne la taille du disque cloné s'il est plus grand que le modèle
   disks {
+    ide {
+      ide2 {
+        cloudinit {
+          storage = var.storage_pool
+        }
+      }
+    }
     scsi {
       scsi0 {
         disk {
