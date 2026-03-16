@@ -100,6 +100,6 @@ variable "ci_user" {
 # SSH
 variable "ssh_public_key" {
   type        = string
-  default     = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDPyScsD2O7b4bfX9Rn3Fu8pMf/7u/jkG6OgOwYA8Qj7 tom@packer"
+  default     = file("~/.ssh/id_ed25519.pub")
   description = "SSH public key pour l'utilisateur cloud-init"
 }
