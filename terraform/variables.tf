@@ -28,6 +28,6 @@ variable "proxmox_skip_tls_verify" {
 # SSH
 variable "ssh_public_key" {
   type        = string
-  default     = file("~/.ssh/id_ed25519.pub")
+  default     = "~/.ssh/id_ed25519.pub"
   description = "SSH public key pour l'accès aux VMs"
 }
