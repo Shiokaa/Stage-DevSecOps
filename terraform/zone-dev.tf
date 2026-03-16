@@ -5,13 +5,13 @@
 # On peut très bien aussi séparé en plusieurs fichier pour plus de lisibilité.
 # ──────────────────────────────────────────────
 
-# Zone DMZ - Exposée 
+# Zone Dev
 
-# VM Bastion : 
-module "bastion" {
+# VM Dev 
+module "dev" {
   source = "./modules/vm"
 
-  name           = "bastion"
+  name           = "dev"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
@@ -22,26 +22,11 @@ module "bastion" {
   ssh_public_key = var.ssh_public_key
 }
 
-# VM Reverse Proxy : 
-module "reverse-proxy" {
+# VM Database : 
+module "database" {
   source = "./modules/vm"
 
-  name           = "reverse-proxy"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  ip_config      = "ip=dhcp"
-  ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
-}
-
-# VM CI/CD
-module "ci-cd" {
-  source = "./modules/vm"
-
-  name           = "ci-cd"
+  name           = "database"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
