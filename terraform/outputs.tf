@@ -4,13 +4,15 @@
 
 locals {
   all_vm_names = concat(
-    module.test_vm.vm_names,
-    module.test_vm_2.vm_names,
+    module.bastion.vm_names,
+    module.reverse-proxy.vm_names,
+    module.ci-cd.vm_names,
   )
 
   all_vm_ips = concat(
-    module.test_vm.vm_ips,
-    module.test_vm_2.vm_ips,
+    module.bastion.vm_ips,
+    module.reverse-proxy.vm_ips,
+    module.ci-cd.vm_ips,
   )
 }
 
