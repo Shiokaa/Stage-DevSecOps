@@ -21,7 +21,6 @@ module "bastion" {
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }
-
 # VM Reverse Proxy : 
 module "reverse-proxy" {
   source = "./modules/vm"

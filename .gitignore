@@ -27,3 +27,6 @@ id_rsa*
 # OS
 .DS_Store
 Thumbs.db
+
+# Env
+.venv
