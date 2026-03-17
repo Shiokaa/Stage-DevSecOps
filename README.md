@@ -40,14 +40,16 @@ Ce projet met en place une chaîne **d'Infrastructure as Code (IaC)** pour autom
 
 ```bash
 Stage-DevSecOps\
-|–– .gitgnore           # Contient les dossiers et fichiers à ignorer à la racine
-|–– terraform          # Contient les dossiers et fichiers liés à la configuration terraform
+|–– .gitgnore			# Contient les dossiers et fichiers à ignorer à la racine
+|–– terraform			# Contient les dossiers et fichiers liés à la configuration terraform
 |–– packer              # Contient les dossiers et fichiers liés à la configuration packer
+|-- ansible 			# Contient les dossiers et fichiers liés à la configuration ansible
 ```
 
 Pour plus d'information sur les configurations : 
 - [Packer](./packer/)
 - [Terraform](./terraform/)
+- [Ansible](./ansible/)
 
 # Diagramme d'architecture :
 
