@@ -17,7 +17,7 @@ module "dev" {
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=dhcp"
+  ip_config      = "ip=192.168.10.67/24,gw=192.168.10.247"
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }
@@ -32,7 +32,7 @@ module "database" {
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=dhcp"
+  ip_config      = "ip=192.168.10.24/24,gw=192.168.10.247"
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }

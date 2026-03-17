@@ -17,7 +17,7 @@ module "bastion" {
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=dhcp"
+  ip_config      = "ip=192.168.10.9/24,gw=192.168.10.247"
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }
@@ -31,7 +31,7 @@ module "reverse-proxy" {
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=dhcp"
+  ip_config      = "ip=192.168.10.48/24,gw=192.168.10.247"
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }
@@ -46,7 +46,7 @@ module "ci-cd" {
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=dhcp"
+  ip_config      = "ip=192.168.10.10/24,gw=192.168.10.247"
   ci_user        = "admin"
   ssh_public_key = var.ssh_public_key
 }
