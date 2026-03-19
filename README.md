@@ -44,6 +44,7 @@ Stage-DevSecOps\
 |–– terraform			# Contient les dossiers et fichiers liés à la configuration terraform
 |–– packer              # Contient les dossiers et fichiers liés à la configuration packer
 |-- ansible 			# Contient les dossiers et fichiers liés à la configuration ansible
+|-- doc					# Contient la documentation du projet
 ```
 
 Pour plus d'information sur les configurations : 
