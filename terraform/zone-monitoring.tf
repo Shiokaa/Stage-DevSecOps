@@ -7,47 +7,50 @@
 
 # Zone Monitoring
 
-# VM Prometheus : 
-module "prometheus" {
-  source = "./modules/vm"
-
-  name           = "prometheus"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  ip_config      = "ip=192.168.10.52/24,gw=192.168.10.247"
-  ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
-}
-
-# VM Grafana : 
+# VM grafana : 
 module "grafana" {
   source = "./modules/vm"
 
-  name           = "grafana"
+  name           = "stage-grafana"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=192.168.10.68/24,gw=192.168.10.247"
+  bridge         = "ZoneMoni"
+  ip_config      = "ip=172.16.40.1/24,gw=172.16.40.254"
   ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
+  ssh_public_key = file(var.ssh_public_key)
 }
 
-# VM Loki
+# VM loki
 module "loki" {
   source = "./modules/vm"
 
-  name           = "loki"
+  name           = "stage-loki"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=192.168.10.7/24,gw=192.168.10.247"
+  bridge         = "ZoneMoni"
+  ip_config      = "ip=172.16.40.2/24,gw=172.16.40.254"
   ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
+  ssh_public_key = file(var.ssh_public_key)
+}
+
+# VM prometheus : 
+module "prometheus" {
+  source = "./modules/vm"
+
+  name           = "stage-prometheus"
+  target_node    = "node2"
+  template_name  = "ubuntu-2404-template"
+  cores          = 2
+  memory         = 2048
+  disk_size      = "20G"
+  bridge         = "ZoneMoni"
+  ip_config      = "ip=172.16.40.3/24,gw=172.16.40.254"
+  ci_user        = "admin"
+  ssh_public_key = file(var.ssh_public_key)
 }

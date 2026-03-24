@@ -7,46 +7,34 @@
 
 # Zone DMZ - Exposée 
 
-# VM Bastion : 
-module "bastion" {
-  source = "./modules/vm"
-
-  name           = "bastion"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  ip_config      = "ip=192.168.10.9/24,gw=192.168.10.247"
-  ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
-}
-# VM Reverse Proxy : 
+# VM reverse-proxy : 
 module "reverse-proxy" {
   source = "./modules/vm"
 
-  name           = "reverse-proxy"
+  name           = "stage-reverse-proxy"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=192.168.10.48/24,gw=192.168.10.247"
+  bridge         = "ZoneDmz"
+  ip_config      = "ip=172.16.10.1/24,gw=172.16.10.254"
   ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
+  ssh_public_key = file(var.ssh_public_key)
 }
 
-# VM CI/CD
-module "ci-cd" {
+# VM server-web : 
+module "server-web" {
   source = "./modules/vm"
 
-  name           = "ci-cd"
+  name           = "stage-server-web"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  ip_config      = "ip=192.168.10.10/24,gw=192.168.10.247"
+  bridge         = "ZoneDmz"
+  ip_config      = "ip=172.16.10.2/24,gw=172.16.10.254"
   ci_user        = "admin"
-  ssh_public_key = var.ssh_public_key
+  ssh_public_key = file(var.ssh_public_key)
 }

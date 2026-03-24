@@ -5,52 +5,36 @@
 # On peut très bien aussi séparé en plusieurs fichier pour plus de lisibilité.
 # ──────────────────────────────────────────────
 
-# Zone Dev
+# Zone Database
 
-# VM database-dev
-module "database-dev" {
+# VM database 
+module "database" {
   source = "./modules/vm"
 
-  name           = "stage-database-dev"
+  name           = "stage-database"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.1/24,gw=172.16.30.254"
+  bridge         = "ZoneDB"
+  ip_config      = "ip=172.16.20.1/24,gw=172.16.20.254"
   ci_user        = "admin"
   ssh_public_key = file(var.ssh_public_key)
 }
 
-# VM server-web-dev : 
-module "server-web-dev" {
+# VM backup : 
+module "backup" {
   source = "./modules/vm"
 
-  name           = "stage-server-web-dev"
+  name           = "stage-backup"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.2/24,gw=172.16.30.254"
-  ci_user        = "admin"
-  ssh_public_key = file(var.ssh_public_key)
-}
-
-# VM ci-cd : 
-module "ci-cd" {
-  source = "./modules/vm"
-
-  name           = "stage-ci-cd"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.3/24,gw=172.16.30.254"
+  bridge         = "ZoneDB"
+  ip_config      = "ip=172.16.20.2/24,gw=172.16.20.254"
   ci_user        = "admin"
   ssh_public_key = file(var.ssh_public_key)
 }

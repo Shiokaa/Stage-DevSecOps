@@ -5,52 +5,51 @@
 # On peut très bien aussi séparé en plusieurs fichier pour plus de lisibilité.
 # ──────────────────────────────────────────────
 
-# Zone Dev
+# Zone Infra
 
-# VM database-dev
-module "database-dev" {
+# VM gateway : 
+/* module "gateway" {
   source = "./modules/vm"
 
-  name           = "stage-database-dev"
+  name           = "stage-gateway"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.1/24,gw=172.16.30.254"
+  ip_config      = "ip=172.16.50.254/24,gw=172.16.50.254"
+  ci_user        = "admin"
+  ssh_public_key = var.ssh_public_key
+} */
+
+# VM dns : 
+module "dns" {
+  source = "./modules/vm"
+
+  name           = "stage-dns"
+  target_node    = "node2"
+  template_name  = "ubuntu-2404-template"
+  cores          = 2
+  memory         = 2048
+  disk_size      = "20G"
+  bridge         = "ZoneInfra"
+  ip_config      = "ip=172.16.50.1/24,gw=172.16.50.254"
   ci_user        = "admin"
   ssh_public_key = file(var.ssh_public_key)
 }
 
-# VM server-web-dev : 
-module "server-web-dev" {
+# VM bastion : 
+module "bastion" {
   source = "./modules/vm"
 
-  name           = "stage-server-web-dev"
+  name           = "stage-bastion"
   target_node    = "node2"
   template_name  = "ubuntu-2404-template"
   cores          = 2
   memory         = 2048
   disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.2/24,gw=172.16.30.254"
-  ci_user        = "admin"
-  ssh_public_key = file(var.ssh_public_key)
-}
-
-# VM ci-cd : 
-module "ci-cd" {
-  source = "./modules/vm"
-
-  name           = "stage-ci-cd"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  bridge         = "ZoneDev"
-  ip_config      = "ip=172.16.30.3/24,gw=172.16.30.254"
+  bridge         = "ZoneInfra"
+  ip_config      = "ip=172.16.50.2/24,gw=172.16.50.254"
   ci_user        = "admin"
   ssh_public_key = file(var.ssh_public_key)
 }
