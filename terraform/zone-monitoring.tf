@@ -20,6 +20,7 @@ module "grafana" {
   bridge         = "ZoneMoni"
   ip_config      = "ip=172.16.40.1/24,gw=172.16.40.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
 
@@ -36,6 +37,7 @@ module "loki" {
   bridge         = "ZoneMoni"
   ip_config      = "ip=172.16.40.2/24,gw=172.16.40.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
 
@@ -52,5 +54,6 @@ module "prometheus" {
   bridge         = "ZoneMoni"
   ip_config      = "ip=172.16.40.3/24,gw=172.16.40.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }

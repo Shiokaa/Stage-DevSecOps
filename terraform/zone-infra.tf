@@ -35,6 +35,7 @@ module "dns" {
   bridge         = "ZoneInfra"
   ip_config      = "ip=172.16.50.1/24,gw=172.16.50.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
 
@@ -51,5 +52,6 @@ module "bastion" {
   bridge         = "ZoneInfra"
   ip_config      = "ip=172.16.50.2/24,gw=172.16.50.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }

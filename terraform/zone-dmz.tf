@@ -20,6 +20,7 @@ module "reverse-proxy" {
   bridge         = "ZoneDmz"
   ip_config      = "ip=172.16.10.1/24,gw=172.16.10.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
 
@@ -36,5 +37,6 @@ module "server-web" {
   bridge         = "ZoneDmz"
   ip_config      = "ip=172.16.10.2/24,gw=172.16.10.254"
   ci_user        = "admin"
+  ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }

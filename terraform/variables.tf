@@ -25,6 +25,13 @@ variable "proxmox_skip_tls_verify" {
   description = "Skip la vérification TLS (mettre en false en production)"
 }
 
+# Cloud-init
+variable "ci_password" {
+  type        = string
+  description = "Cloud Init mot de passe de l'utilisateur"
+  sensitive   = true
+}
+
 # SSH
 variable "ssh_public_key" {
   type        = string

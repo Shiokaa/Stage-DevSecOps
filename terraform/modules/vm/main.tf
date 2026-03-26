@@ -58,6 +58,7 @@ resource "proxmox_vm_qemu" "vm" {
   ipconfig0  = var.ip_config
   nameserver = var.nameserver
   ciuser     = var.ci_user
+  cipassword = var.ci_password
   sshkeys    = "${var.ssh_public_key}\n"
 
   lifecycle {

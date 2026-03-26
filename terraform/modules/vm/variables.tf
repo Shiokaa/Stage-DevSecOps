@@ -97,6 +97,12 @@ variable "ci_user" {
   description = "Cloud-init utilisateur"
 }
 
+variable "ci_password" {
+  type = string
+  description = "Cloud-init mot de passe de l'utiliateur"
+  sensitive = true
+}
+
 # SSH
 variable "ssh_public_key" {
   type        = string
