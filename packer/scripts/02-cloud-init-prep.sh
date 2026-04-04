@@ -14,10 +14,17 @@ sudo tee /etc/cloud/cloud.cfg.d/99-proxmox.cfg > /dev/null << 'EOF'
 datasource_list: [NoCloud, ConfigDrive, None]
 EOF
 
-# Reset de cloud-init pour pouvoir le run sur les prochaines machines
+# Supprime l'utilisateur ubuntu au premier boot de chaque VM déployée.
+sudo tee /etc/cloud/cloud.cfg.d/98-remove-template-user.cfg > /dev/null << 'EOF'
+runcmd:
+  - userdel -r ubuntu || true
+  - rm -f /etc/sudoers.d/ubuntu
+EOF
+
+# Reset de cloud-init pour pouvoir le relancer sur les prochaines VMs déployées
 sudo cloud-init clean --logs --seed --machine-id
 
-# Enlève le machine-id pour que chaque machine ait le sien
+# Enlève le machine-id pour que chaque VM déployée génère le sien propre
 sudo truncate -s 0 /etc/machine-id
 sudo rm -f /var/lib/dbus/machine-id
 sudo ln -sf /etc/machine-id /var/lib/dbus/machine-id
