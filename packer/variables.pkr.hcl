@@ -52,7 +52,7 @@ variable "template_description" {
 
 variable "template_tags" {
   type        = string
-  default     = "template;ubuntu;2404"
+  default     = "template;ubuntu;2404;stage;tom;etienne"
   description = "Tags de la VM template"
 }
 
@@ -78,19 +78,19 @@ variable "iso_checksum" {
 # Hardware
 variable "vm_cores" {
   type        = number
-  default     = 2
+  default     = 8
   description = "Nombre de coeur du CPU"
 }
 
 variable "vm_memory" {
   type        = number
-  default     = 2048
+  default     = 8196
   description = "Mémoire en MB"
 }
 
 variable "vm_disk_size" {
   type        = string
-  default     = "20G"
+  default     = "8G"
   description = "Taille du disque en GB"
 }
 
