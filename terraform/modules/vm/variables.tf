@@ -138,18 +138,6 @@ variable "gateway" {
   description = "IP gateway de la VM"
 }
 
-/* variable "nameserver" {
-  type        = string
-  default     = ""
-  description = "DNS nameserver"
-}
-
-variable "searchdomain" {
-  type        = string
-  default     = ""
-  description = "DNS domain"
-} */
-
 # Cloud-init
 variable "content_type" {
   type        = string
