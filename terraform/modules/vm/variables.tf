@@ -3,15 +3,41 @@
 # ──────────────────────────────────────────────
 
 # VM paramètres
-variable "name" {
+variable "hostname" {
   type        = string
   description = "VM nom"
 }
 
+variable "domain" {
+  type        = string
+  description = "Domain du DNS"
+}
+
 variable "description" {
   type        = string
-  default     = ""
   description = "VM description"
+}
+
+variable "vm_count" {
+  type        = number
+  default     = 1
+  description = "Nombre de VMs à créer"
+}
+
+variable "tags" {
+  type        = list(string)
+  description = "Tags de la VM"
+}
+
+variable "vm_id" {
+  type        = number
+  description = "Id de la VM"
+}
+
+variable "on_boot" {
+  type        = bool
+  default     = false
+  description = "Auto start de la VM lorsque la node se démarre"
 }
 
 # Proxmox connection
@@ -28,47 +54,71 @@ variable "pool" {
 }
 
 # Clone
-variable "template_name" {
+variable "template_node" {
   type        = string
-  default     = "ubuntu-2404-template"
-  description = "Nom de la template packer à cloner"
+  default     = "node2"
+  description = "Node de la VM template"
 }
 
-variable "vm_count" {
+variable "template_id" {
   type        = number
-  default     = 1
-  description = "Nombre de VMs à créer"
+  default     = 9000
+  description = "Id de la template à cloner"
 }
 
-variable "vmid_start" {
-  type        = number
-  default     = null
-  description = "ID de la VM de départ (null = attribution automatique)"
+variable "full_clone" {
+  type        = bool
+  default     = true
+  description = "Full clone"
+}
+
+# Agent
+variable "qemu_guest_agent" {
+  type        = bool
+  default     = true
+  description = "Qemu Guest Agent"
 }
 
 # Hardware
-variable "cores" {
-  type        = number
-  default     = 2
-  description = "Nombre de coeur du CPU"
+
+## CPU
+variable "cpu_type" {
+  type        = string
+  default     = "x86-64-v2-AES"
+  description = "Type du CPU"
 }
+
+variable "cpu_cores" {
+  type        = number
+  default     = 1
+  description = "Nombre de coeurs du CPU"
+}
+
+variable "cpu_sockets" {
+  type        = number
+  default     = 1
+  description = "Nombre de sockets du CPU"
+}
+
+## Memory
 
 variable "memory" {
   type        = number
   default     = 2048
-  description = "Mémoire en MB"
+  description = "Nombre de mémoire en MB"
 }
 
-variable "disk_size" {
-  type        = string
-  default     = "20G"
-  description = "Taille du disque en GB"
-}
-
-variable "storage_pool" {
-  type        = string
-  default     = "local-lvm"
-  description = "Le stockage du disque sur Proxmox"
+## Disk
+variable "disk" {
+  description = "Taille du disk en GB"
+  type = object({
+    storage = string
+    size    = number
+  })
+  default = {
+    storage = "local-lvm"
+    size    = 30
+  }
 }
 
 # Réseau
@@ -80,32 +130,45 @@ variable "bridge" {
 
 variable "ip_config" {
   type        = string
-  default     = "ip=dhcp"
-  description = "IP configuration (ex: ip=10.0.0.10/24,gw=10.0.0.1 ou ip=dhcp)"
+  description = "IP de la VM ('dhcp' pour une IP avec dhcp)"
 }
 
-variable "nameserver" {
+variable "gateway" {
+  type        = string
+  description = "IP gateway de la VM"
+}
+
+/* variable "nameserver" {
   type        = string
   default     = ""
   description = "DNS nameserver"
 }
 
+variable "searchdomain" {
+  type        = string
+  default     = ""
+  description = "DNS domain"
+} */
+
 # Cloud-init
+variable "content_type" {
+  type        = string
+  default     = "snippets"
+  description = "Content Type"
+}
+
+variable "datastore" {
+  type        = string
+  default     = "local"
+  description = "Storage du fichier"
+}
+
 variable "ci_user" {
   type        = string
-  default     = "admin"
-  description = "Cloud-init utilisateur"
+  description = "Utilisateur de la VM"
 }
 
-variable "ci_password" {
-  type = string
-  description = "Cloud-init mot de passe de l'utiliateur"
-  sensitive = true
-}
-
-# SSH
-variable "ssh_public_key" {
-  type        = string
-  default     = "~/.ssh/id_ed25519.pub"
-  description = "SSH public key pour l'utilisateur cloud-init"
+variable "ci_ssh_keys" {
+  type        = list(string)
+  description = "Liste des clés SSH pour le cloud-init"
 }

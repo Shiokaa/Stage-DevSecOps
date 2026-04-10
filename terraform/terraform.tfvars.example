@@ -7,4 +7,8 @@ proxmox_api_token_id     = "terraform@pam!terraform-token"
 proxmox_api_token_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 proxmox_skip_tls_verify  = true
 
-ssh_public_key = "ssh-ed25519 AAAA... "
+ssh_user = "mon-user"
+ssh_key = "ma-clé-ssh"
+
+ci_user = "mon-ci-user"
+ci_ssh_keys = ["ma-clé-1", "ma-clé-2"]

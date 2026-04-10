@@ -7,7 +7,7 @@
 
 # Zone DMZ - Exposée 
 
-# VM reverse-proxy : 
+/* # VM reverse-proxy : 
 module "reverse-proxy" {
   source = "./modules/vm"
 
@@ -19,6 +19,7 @@ module "reverse-proxy" {
   disk_size      = "20G"
   bridge         = "ZoneDmz"
   ip_config      = "ip=172.16.10.1/24,gw=172.16.10.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
@@ -36,7 +37,9 @@ module "server-web" {
   disk_size      = "20G"
   bridge         = "ZoneDmz"
   ip_config      = "ip=172.16.10.2/24,gw=172.16.10.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
+ */

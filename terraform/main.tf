@@ -3,19 +3,21 @@
 # ──────────────────────────────────────────────
 
 terraform {
-  required_version = ">= 1.5.0"
-
+  required_version = ">=1.5.0"
   required_providers {
     proxmox = {
-      source  = "telmate/proxmox"
-      version = "3.0.2-rc07"
+      source  = "bpg/proxmox"
+      version = "0.100.0"
     }
   }
 }
 
 provider "proxmox" {
-  pm_api_url          = var.proxmox_api_url
-  pm_api_token_id     = var.proxmox_api_token_id
-  pm_api_token_secret = var.proxmox_api_token_secret
-  pm_tls_insecure     = var.proxmox_skip_tls_verify
+  endpoint  = var.proxmox_api_url
+  api_token = "${var.proxmox_api_token_id}=${var.proxmox_api_token_secret}"
+  insecure  = var.proxmox_skip_tls_verify
+  ssh {
+    username    = var.ssh_user
+    private_key = file(var.ssh_key)
+  }
 }

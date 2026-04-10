@@ -7,7 +7,7 @@
 
 # Zone Database
 
-# VM database 
+/* # VM database 
 module "database" {
   source = "./modules/vm"
 
@@ -19,6 +19,7 @@ module "database" {
   disk_size      = "20G"
   bridge         = "ZoneDB"
   ip_config      = "ip=172.16.20.1/24,gw=172.16.20.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
@@ -36,7 +37,9 @@ module "backup" {
   disk_size      = "20G"
   bridge         = "ZoneDB"
   ip_config      = "ip=172.16.20.2/24,gw=172.16.20.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
+ */

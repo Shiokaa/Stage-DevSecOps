@@ -7,7 +7,7 @@
 
 # Zone Dev
 
-# VM database-dev
+/* # VM database-dev
 module "database-dev" {
   source = "./modules/vm"
 
@@ -19,6 +19,7 @@ module "database-dev" {
   disk_size      = "20G"
   bridge         = "ZoneDev"
   ip_config      = "ip=172.16.30.1/24,gw=172.16.30.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
@@ -36,6 +37,7 @@ module "server-web-dev" {
   disk_size      = "20G"
   bridge         = "ZoneDev"
   ip_config      = "ip=172.16.30.2/24,gw=172.16.30.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
@@ -53,7 +55,9 @@ module "ci-cd" {
   disk_size      = "20G"
   bridge         = "ZoneDev"
   ip_config      = "ip=172.16.30.3/24,gw=172.16.30.254"
+  nameserver     = "tom.lan"
   ci_user        = "admin"
   ci_password    = var.ci_password
   ssh_public_key = file(var.ssh_public_key)
 }
+ */
