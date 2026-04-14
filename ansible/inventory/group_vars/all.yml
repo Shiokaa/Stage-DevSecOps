@@ -1,0 +1,4 @@
+---
+env: production
+timezone: Europe/Paris
+ntp_server: pool.ntp.org

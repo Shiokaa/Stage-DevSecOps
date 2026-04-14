@@ -1,0 +1,21 @@
+---
+- name: Vérifier si Teleport est déjà installé
+  ansible.builtin.command: which teleport
+  register: teleport_installed     # Stock le résultat dans la variable 
+  failed_when: false               # Ansible considère les commandes avec rc =! 0 comme un échec et stoppe le playbook
+  changed_when: false              # Ansible marque une tâche comme "changed" à chaque exécution. Cette tâche ne modifie rien c'est une vérification
+  tags: install
+
+- name: Télécharger le script d'installation Teleport
+  ansible.builtin.get_url:
+    url: https://cdn.teleport.dev/install.sh
+    dest: /tmp/teleport_install.sh
+    mode: '0755'
+  when: teleport_installed.rc != 0
+  tags: install
+
+- name: Installer Teleport
+  ansible.builtin.shell:
+    cmd: /tmp/teleport_install.sh 18.7.3
+  when: teleport_installed.rc != 0
+  tags: install

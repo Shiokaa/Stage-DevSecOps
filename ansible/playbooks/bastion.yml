@@ -1,0 +1,7 @@
+---
+- name: Déploiement teleport
+  hosts: bastion
+  become: true
+
+  roles:
+    - role: teleport
