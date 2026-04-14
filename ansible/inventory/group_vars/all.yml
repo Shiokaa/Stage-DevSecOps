@@ -1,4 +1,4 @@
 ---
 env: production
 timezone: Europe/Paris
-ntp_server: pool.ntp.org
+ntp_server: fr.pool.ntp.org

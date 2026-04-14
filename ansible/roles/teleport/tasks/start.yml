@@ -1,12 +1,12 @@
 ---
-- name: Vérifier si Teleport tourne
+- name: Vérifier si Teleport tourne # mettre un nom explicite et pas une phrase
   ansible.builtin.command: systemctl is-active teleport
   register: teleport_running
   failed_when: false
   changed_when: false
   tags: start
 
-- name: Activer Teleport automatiquement au boot 
+- name: Activer Teleport automatiquement au boot  # mettre un nom explicite et pas une phrase
   ansible.builtin.shell: systemctl enable --now teleport
   when: teleport_running.rc != 0
   tags: start
