@@ -3,3 +3,4 @@
 - import_tasks: certificat.yml
 - import_tasks: configuration.yml
 - import_tasks: start.yml
+- import_tasks: create_users.yml
