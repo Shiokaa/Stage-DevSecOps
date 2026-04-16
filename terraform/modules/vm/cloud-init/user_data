@@ -15,13 +15,15 @@ users:
 
 ssh_pwauth: false
 
-manage_resolv_conf: true
-resolv_conf:
-  nameservers: ['192.168.10.249', '8.8.4.4', '8.8.8.8']
-  searchdomains:
-    - tom.lan
-  options:
-    rotate: true
-    timeout: 3
-
 timezone: Europe/Paris
+
+growpart:
+  mode: auto
+  devices: ['/']
+  ignore_headroom: false
+
+runcmd:
+  - growpart /dev/sda 3
+  - pvresize /dev/sda3
+  - lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+  - resize2fs /dev/ubuntu-vg/ubuntu-lv
