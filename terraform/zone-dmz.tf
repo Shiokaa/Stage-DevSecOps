@@ -7,39 +7,56 @@
 
 # Zone DMZ - Exposée 
 
-/* # VM reverse-proxy : 
-module "reverse-proxy" {
+# VM reverse-proxy
+module "proxy" {
   source = "./modules/vm"
 
-  name           = "stage-reverse-proxy"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  bridge         = "ZoneDmz"
-  ip_config      = "ip=172.16.10.1/24,gw=172.16.10.254"
-  nameserver     = "tom.lan"
-  ci_user        = "admin"
-  ci_password    = var.ci_password
-  ssh_public_key = file(var.ssh_public_key)
+  hostname    = "stage-proxy"
+  domain      = "tom.lan"
+  description = "Reverse Proxy (Point d'entrée principal) - Environnement Staging"
+  vm_id       = 8101
+  tags        = ["proxy", "staging", "dmz"]
+
+  cpu_sockets = 1
+  cpu_cores   = 2
+  memory      = 2048
+  disk = {
+    storage = "local-lvm"
+    size    = 20
+  }
+
+  ip_config = "172.16.10.1/24"
+  gateway   = "172.16.10.254"
+  bridge    = "ZoneDmz"
+
+  ci_user     = "admin"
+  ci_ssh_keys = var.ci_ssh_keys
+  depends_on  = [module.web]
 }
 
-# VM server-web : 
-module "server-web" {
+# VM server-web
+module "web" {
   source = "./modules/vm"
 
-  name           = "stage-server-web"
-  target_node    = "node2"
-  template_name  = "ubuntu-2404-template"
-  cores          = 2
-  memory         = 2048
-  disk_size      = "20G"
-  bridge         = "ZoneDmz"
-  ip_config      = "ip=172.16.10.2/24,gw=172.16.10.254"
-  nameserver     = "tom.lan"
-  ci_user        = "admin"
-  ci_password    = var.ci_password
-  ssh_public_key = file(var.ssh_public_key)
+  hostname    = "stage-web"
+  domain      = "tom.lan"
+  description = "Serveur Web Applicatif - Environnement Staging"
+  vm_id       = 8102
+  tags        = ["web", "staging", "dmz"]
+
+  cpu_sockets = 1
+  cpu_cores   = 2
+  memory      = 2048
+  disk = {
+    storage = "local-lvm"
+    size    = 30
+  }
+
+  ip_config = "172.16.10.2/24"
+  gateway   = "172.16.10.254"
+  bridge    = "ZoneDmz"
+
+  ci_user     = "admin"
+  ci_ssh_keys = var.ci_ssh_keys
+  depends_on  = [module.db]
 }
- */
