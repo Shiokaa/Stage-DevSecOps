@@ -1,12 +1,12 @@
 ---
-- name: Verifier si un certificat auto signé existe déjà
+- name: Verifier si un certificat auto signé existe déjà # mettre un nom explicite et pas une phrase
   ansible.builtin.command: openssl x509 -noout -in /var/lib/teleport/fullchain.pem
   register: certificat_exist
   failed_when: false
   changed_when: false
   tags: certificat
 
-- name: Ajouter un certificat auto signé
+- name: Ajouter un certificat auto signé # mettre un nom explicite et pas une phrase
   ansible.builtin.shell: |
     openssl req -x509 -nodes -days 3650 -newkey rsa:4096 \
       -keyout /var/lib/teleport/privkey.pem \
