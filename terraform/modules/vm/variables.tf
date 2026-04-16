@@ -8,11 +8,6 @@ variable "hostname" {
   description = "VM nom"
 }
 
-variable "domain" {
-  type        = string
-  description = "Domain du DNS"
-}
-
 variable "description" {
   type        = string
   description = "VM description"
@@ -38,6 +33,12 @@ variable "on_boot" {
   type        = bool
   default     = false
   description = "Auto start de la VM lorsque la node se démarre"
+}
+
+variable "started" {
+  type        = bool
+  default     = false
+  description = "Auto start de la VM lors de la création"
 }
 
 # Proxmox connection
@@ -138,6 +139,16 @@ variable "gateway" {
   description = "IP gateway de la VM"
 }
 
+variable "servers" {
+  type        = list(string)
+  default     = ["172.16.50.254"]
+  description = "Liste des serveurs DNS"
+}
+
+variable "domain" {
+  type        = string
+  description = "Domain du DNS"
+}
 # Cloud-init
 variable "content_type" {
   type        = string

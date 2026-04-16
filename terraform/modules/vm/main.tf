@@ -53,6 +53,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
   tags        = var.tags
   vm_id       = var.vm_id + count.index
   on_boot     = var.on_boot
+  started     = var.started
 
   node_name = var.target_node
   pool_id   = var.pool
@@ -100,6 +101,11 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   initialization {
+    dns {
+      domain  = var.domain
+      servers = var.servers
+    }
+
     ip_config {
       ipv4 {
         address = var.ip_config
