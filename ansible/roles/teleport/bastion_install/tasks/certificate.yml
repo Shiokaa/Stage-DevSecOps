@@ -1,0 +1,17 @@
+---
+- name: verif_certificate_exist
+  ansible.builtin.command: openssl x509 -noout -in /var/lib/teleport/fullchain.pem
+  register: certificate_exist
+  failed_when: false
+  changed_when: false
+  tags: certificate
+
+- name: add_certificate
+  ansible.builtin.shell: |
+    openssl req -x509 -nodes -days 3650 -newkey rsa:4096 \
+      -keyout /var/lib/teleport/privkey.pem \
+      -out /var/lib/teleport/fullchain.pem \
+      -subj "/CN=bastion.tom.lan" \
+      -addext "subjectAltName=DNS:bastion.tom.lan,IP:172.16.50.1"
+  when: certificate_exist.rc != 0
+  tags: certificate

@@ -1,0 +1,3 @@
+---
+- import_tasks: get_token.yml
+- import_tasks: get_certificate.yml

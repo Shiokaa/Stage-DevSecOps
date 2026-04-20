@@ -1,0 +1,7 @@
+---
+- name: deploy_teleport
+  hosts: bastion
+  become: true
+
+  roles:
+    - role: teleport/bastion_install

@@ -1,0 +1,19 @@
+---
+- name: enroll_config
+  ansible.builtin.command: >
+    teleport node configure
+    --proxy=bastion.tom.lan:443
+    --token={{ hostvars['bastion']['token'] }}
+    --output=file:///etc/teleport.yaml
+  args:
+    creates: /etc/teleport.yaml
+
+- name: verif_teleport_work
+  ansible.builtin.command: systemctl is-active teleport
+  register: teleport_running
+  failed_when: false
+  changed_when: false
+
+- name: active_teleport_on_boot
+  ansible.builtin.shell: systemctl enable --now teleport
+  when: teleport_running.rc != 0

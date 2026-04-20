@@ -1,12 +1,12 @@
 ---
-- name: Vérifier si le fichier teleport.yml existe déjà # mettre un nom explicite et pas une phrase
+- name: verif_teleport.yml
   ansible.builtin.shell: cat /etc/teleport.yaml
   register: file_exist
   failed_when: false
   changed_when: false
   tags: configuration
 
-- name: Configuration du fichier teleport.yml # mettre un nom explicite et pas une phrase
+- name: config_teleport.yml
   ansible.builtin.shell: |
     teleport configure -o file \
       --cluster-name=bastion.tom.lan \

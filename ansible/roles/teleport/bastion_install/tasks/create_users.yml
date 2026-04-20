@@ -1,0 +1,27 @@
+- name: wait_teleport_ready
+  ansible.builtin.shell: tctl status
+  register: teleport_status
+  until: teleport_status.rc == 0
+  retries: 10
+  delay: 5
+  changed_when: false
+  tags: create_users
+
+- name: verif_user_exist
+  ansible.builtin.shell: tctl users ls
+  register: existing_users
+  failed_when: false
+  changed_when: false
+  tags: create_users
+
+- name: create_teleport_user
+  command: tctl users add tom --logins=admin,root --roles=access,editor
+  register: teleport_user_output
+  when: "'tom' not in existing_users.stdout"
+  tags: create_users
+
+- name: display_invitation_link
+  debug:
+    msg: "{{ teleport_user_output.stdout }}"
+  when: teleport_user_output is not skipped
+  tags: create_users

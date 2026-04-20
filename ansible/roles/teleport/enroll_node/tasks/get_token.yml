@@ -1,0 +1,9 @@
+---
+- name: generate_token
+  command: tctl tokens add --ttl=30m --type=node --format=text
+  register: teleport_token_output
+  changed_when: true
+
+- name: shortcut_token_var
+  set_fact:
+    token: "{{ teleport_token_output.stdout }}"

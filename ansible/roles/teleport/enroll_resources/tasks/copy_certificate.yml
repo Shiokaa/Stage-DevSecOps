@@ -1,0 +1,12 @@
+---
+- name: create_certificate_file
+  ansible.builtin.copy:
+    dest: /usr/local/share/ca-certificates/bastion-tom-lan.crt
+    content: "{{ hostvars['bastion']['certificate'] }}"
+    owner: root
+    group: root
+    mode: '0644'
+  when: hostvars['bastion']['certificate'] is defined
+
+- name: update_certificate
+  command: update-ca-certificates
