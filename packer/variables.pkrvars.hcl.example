@@ -3,7 +3,7 @@
 # ──────────────────────────────────────────────
 
 proxmox_api_url          = "https://proxmox.example.com:8006/api2/json"
-proxmox_api_token_id     = "terraform@pam!terraform-token"
+proxmox_api_token_id     = "packer@pam!packer-token"
 proxmox_api_token_secret = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 proxmox_node             = "node2"
 
