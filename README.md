@@ -95,4 +95,3 @@ chmod +x build.sh
 # Contact
 Réalisé par :
 - [Amaru Tom](https://github.com/Shiokaa) 
-- [Le Berre Etienne](https://github.com/etiennelb95)
